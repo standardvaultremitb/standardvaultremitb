@@ -7,18 +7,6 @@ const demoUser = {
   ledgerBalance: $400,000.00
 };
 
-function lockedTransfer() {
-  alert("🔐 Account locked.\nPlease contact support.");
-}
-
-function openProfile() {
-  document.getElementById("profileModal").style.display = "block";
-}
-
-function closeProfile() {
-  document.getElementById("profileModal").style.display = "none";
-}
-
 // LOGIN FUNCTION (unchanged)
 function login() {
   const email = document.getElementById("email").value;
@@ -58,4 +46,16 @@ if (window.location.pathname.includes("dashboard")) {
 
   document.getElementById("ledgerBalance").innerText =
     `$${demoUser.ledgerBalance.toLocaleString()}`;
+}
+
+function lockedTransfer() {
+  alert("🔐 Account locked.\nPlease contact support.");
+}
+
+function openProfile() {
+  document.getElementById("profileModal").style.display = "block";
+}
+
+function closeProfile() {
+  document.getElementById("profileModal").style.display = "none";
 }
