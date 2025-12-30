@@ -1,75 +1,66 @@
-/* =========================
-   BASIC LOGIN PROTECTION
-========================= */
-(function () {
-  const isDashboard = window.location.pathname.includes("dashboard.html");
+document.addEventListener("DOMContentLoaded", function () {
 
-  if (isDashboard && !localStorage.getItem("loggedIn")) {
-    window.location.href = "index.html";
+  /* =========================
+     LOGIN PROTECTION
+  ========================= */
+  if (window.location.pathname.includes("dashboard.html")) {
+    if (!localStorage.getItem("loggedIn")) {
+      window.location.href = "index.html";
+      return;
+    }
   }
-})();
 
-/* =========================
-   DEMO USER DATA
-========================= */
-const userData = {
-  fullName: "Dr. Andrew Martinz",
-  firstName: "Amdrew",
-  email: "andrew.martinz@gmail.com",
-  country: "United States of America",
-  occupation: "Orthopedic Surgeon",
-  organization: "United States Army",
-  accountBalance: $400,000,
-  ledgerBalance: $400,000
-};
+  /* =========================
+     DEMO USER DATA
+  ========================= */
+  const userData = {
+    fullName: "Dr. Michael Bernard",
+    firstName: "Michael",
+    email: "user@demo.com",
+    accountBalance: 400000,
+    ledgerBalance: 400000
+  };
 
-/* =========================
-   TIME-BASED GREETING
-========================= */
-(function setGreeting() {
+  /* =========================
+     GREETING
+  ========================= */
   const welcomeEl = document.getElementById("welcome");
-  if (!welcomeEl) return;
+  if (welcomeEl) {
+    const hour = new Date().getHours();
+    let greeting =
+      hour < 12 ? "Good Morning" :
+      hour < 17 ? "Good Afternoon" :
+      "Good Evening";
 
-  const hour = new Date().getHours();
-  let greeting;
-
-  if (hour < 12) {
-    greeting = "Good Morning";
-  } else if (hour < 17) {
-    greeting = "Good Afternoon";
-  } else {
-    greeting = "Good Evening";
+    welcomeEl.textContent = `${greeting}, ${userData.firstName}`;
   }
 
-  welcomeEl.textContent = `${greeting}, ${userData.firstName}`;
-})();
+  /* =========================
+     BALANCES
+  ========================= */
+  const accountBalanceEl = document.getElementById("accountBalance");
+  const ledgerBalanceEl = document.getElementById("ledgerBalance");
+
+  if (accountBalanceEl) {
+    accountBalanceEl.textContent =
+      `$${userData.accountBalance.toLocaleString()}`;
+  }
+
+  if (ledgerBalanceEl) {
+    ledgerBalanceEl.textContent =
+      `$${userData.ledgerBalance.toLocaleString()}`;
+  }
+
+});
 
 /* =========================
-   BALANCE DISPLAY
-========================= */
-(function setBalances() {
-  const acc = document.getElementById("accountBalance");
-  const led = document.getElementById("ledgerBalance");
-
-  if (acc) {
-    acc.textContent = `$${userData.accountBalance.toLocaleString()}`;
-  }
-
-  if (led) {
-    led.textContent = `$${userData.ledgerBalance.toLocaleString()}`;
-  }
-})();
-
-/* =========================
-   ACTIONS
+   GLOBAL ACTION FUNCTIONS
+   (MUST be outside DOMContentLoaded)
 ========================= */
 function lockedTransfer() {
   alert("🔐 Account locked.\nPlease contact support.");
 }
 
-/* =========================
-   PROFILE MODAL CONTROLS
-========================= */
 function openProfile() {
   const modal = document.getElementById("profileModal");
   if (modal) modal.style.display = "block";
@@ -79,22 +70,4 @@ function closeProfile() {
   const modal = document.getElementById("profileModal");
   if (modal) modal.style.display = "none";
 }
-
-/* =========================
-   CLICK OUTSIDE TO CLOSE
-========================= */
-window.addEventListener("click", function (e) {
-  const modal = document.getElementById("profileModal");
-  if (modal && e.target === modal) {
-    modal.style.display = "none";
-  }
-});
-
-/* =========================
-   OPTIONAL: LOGOUT (READY)
-========================= */
-// function logout() {
-//   localStorage.removeItem("loggedIn");
-//   window.location.href = "index.html";
-// }
 
