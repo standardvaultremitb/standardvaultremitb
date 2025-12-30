@@ -2,7 +2,7 @@
    BASIC LOGIN PROTECTION
 ========================= */
 (function () {
-  const isDashboard = window.location.pathname.includes("dashboard");
+  const isDashboard = window.location.pathname.includes("dashboard.html");
 
   if (isDashboard && !localStorage.getItem("loggedIn")) {
     window.location.href = "index.html";
