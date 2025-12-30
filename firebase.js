@@ -1,9 +1,8 @@
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyCao6m2oOFwSMGGiX3wUBCP1U0gwIEYHYs",
   authDomain: "bank-demo-cb3e9.firebaseapp.com",
   projectId: "bank-demo-cb3e9",
@@ -12,9 +11,8 @@
   appId: "1:371149394364:web:8793f2488decff1bab9bb9"
 };
 
-  const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-  window.auth = getAuth(app);
-  window.db = getFirestore(app);
-</script>
-    
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
