@@ -35,16 +35,29 @@
 </div>
 
 <script>
-/* =========================
+  /* =========================
    FRONTEND LOGIN (SAFE)
 ========================= */
 function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  // Demo credentials
   if (email === "andrew.martinz@gmail.com" && password === "Andrew12!") {
+
+    const userData = {
+      fullName: "Dr. Andrew Martinz",
+      firstName: "Andrew",
+      email: "andrew.martinz@gmail.com",
+      country: "United States of America",
+      occupation: "Orthopedic Surgeon",
+      organization: "United States Army",
+      accountBalance: 5,210,000,
+      ledgerBalance: 5,210,000
+    };
+
     localStorage.setItem("loggedIn", "true");
+    localStorage.setItem("userData", JSON.stringify(userData));
+
     window.location.href = "dashboard.html";
   } else {
     alert("Invalid email or password");
