@@ -4,25 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
+
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head> 
+</head>
 <body>
 
+<!-- TOP BAR -->
 <div class="top-bar">
   <i class="fa fa-bars"></i>
   <span>Select Language</span>
-  <div class="avatar"></div>
+
+  <!-- Avatar opens profile -->
+  <div class="avatar" title="Profile" onclick="openProfile()"></div>
 </div>
 
+<!-- WELCOME -->
 <div class="welcome" id="welcome"></div>
 
+<!-- ACTIONS -->
 <div class="actions">
-  <div class="action" onclick="lockedTransfer()">Transfer</div>
-  <div class="action"><i class="fa fa-ticket"></i>Ticket</div>
-  <div class="action orange"><i class="fa fa-user"></i>Profile</div>
+
+  <!-- TRANSFER (LOCKED) -->
+  <div class="action" onclick="lockedTransfer()">
+    <i class="fa fa-paper-plane"></i>
+    Transfer
+  </div>
+
+  <!-- TICKET (NO CHANGE) -->
+  <div class="action">
+    <i class="fa fa-ticket"></i>
+    Ticket
+  </div>
+
+  <!-- PROFILE -->
+  <div class="action orange" onclick="openProfile()">
+    <i class="fa fa-user"></i>
+    Profile
+  </div>
+
 </div>
 
+<!-- BALANCES -->
 <div class="card green">
   <p>Account Balance</p>
   <h2 id="accountBalance"></h2>
@@ -33,24 +56,38 @@
   <h2 id="ledgerBalance"></h2>
 </div>
 
-<a class="fab whatsapp"><i class="fab fa-whatsapp"></i></a>
-<a class="fab chat"><i class="fa fa-comment"></i></a>
+<!-- FLOATING BUTTONS -->
+<a class="fab whatsapp" title="WhatsApp Support">
+  <i class="fab fa-whatsapp"></i>
+</a>
 
-<script src="app.js"></script>
-  
+<a class="fab chat" title="Live Chat">
+  <i class="fa fa-comment"></i>
+</a>
+
 <!-- PROFILE MODAL -->
 <div id="profileModal" class="profile-modal">
   <div class="profile-card">
+
     <span class="close" onclick="closeProfile()">×</span>
 
-    <img src="https://swiftdelivery8.wordpress.com/wp-content/uploads/2025/12/img-20250921-wa00001365510559851195658.jpg" alt="Profile">
+    <img
+      src="https://swiftdelivery8.wordpress.com/wp-content/uploads/2025/12/img-20250921-wa00001365510559851195658.jpg"
+      alt="Profile Picture">
 
     <h3>Dr. Andrew Martinz</h3>
     <p><strong>Email:</strong> andrew.martinz@gmail.com</p>
     <p><strong>Country:</strong> United States of America</p>
-    <p><strong>Occupation:</strong> Orthopedic Surgeon<br>United States Army</p>
+    <p><strong>Occupation:</strong><br>
+       Orthopedic Surgeon<br>
+       United States Army
+    </p>
+
   </div>
 </div>
-  
+
+<!-- SCRIPT -->
+<script src="app.js"></script>
 </body>
 </html>
+
