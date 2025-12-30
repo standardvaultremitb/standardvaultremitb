@@ -46,11 +46,7 @@ if (window.location.pathname.includes("dashboard")) {
 
   document.getElementById("ledgerBalance").innerText =
     `$${demoUser.ledgerBalance.toLocaleString()}`;
-}
-
-function lockedTransfer() {
-  alert("🔐 Account locked.\nPlease contact support.");
-}
+};
 
 function openProfile() {
   document.getElementById("profileModal").style.display = "block";
@@ -59,3 +55,6 @@ function openProfile() {
 function closeProfile() {
   document.getElementById("profileModal").style.display = "none";
 }
+
+
+
