@@ -2,8 +2,8 @@
    DASHBOARD DATA FETCH (FIREBASE)
 ================================ */
 
-firebase.auth().onAuthStateChanged(async (user) => {
-  if (!user) {
+firebase.auth().onAuthStateChanged(async (User) => {
+  if (!User) {
     // Not logged in → redirect
     window.location.href = "index.html";
     return;
@@ -11,7 +11,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
 
   try {
     // Fetch user document from Firestore
-    const docRef = firebase.firestore().collection("User").doc(user.uid);
+    const docRef = firebase.firestore().collection("User").doc(User.uid);
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) {
