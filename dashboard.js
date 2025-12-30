@@ -9,16 +9,16 @@ import { auth, db } from "firebase.js";
 
 console.log("Dashboard JS loaded");
 
-onAuthStateChanged(auth, async (user) => {
-  console.log("Auth state:", user);
+onAuthStateChanged(auth, async (User) => {
+  console.log("Auth state:", User);
 
-  if (!user) {
+  if (!User) {
     console.log("No user, redirecting");
     window.location.href = "index.html";
     return;
   }
 
-  const ref = doc(db, "users", user.uid);
+  const ref = doc(db, "users", User.uid);
   const snap = await getDoc(ref);
 
   console.log("Firestore snapshot exists:", snap.exists());
