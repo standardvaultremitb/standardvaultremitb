@@ -10,42 +10,26 @@
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="top-bar">
   <i class="fa fa-bars"></i>
   <span>Select Language</span>
-
-  <!-- Avatar opens profile -->
-  <div class="avatar" title="Profile" onclick="openProfile()"></div>
+  <div class="avatar" onclick="openProfile()"></div>
 </div>
 
-<!-- WELCOME -->
 <div class="welcome" id="welcome"></div>
 
-<!-- ACTIONS -->
 <div class="actions">
-
-  <!-- TRANSFER (LOCKED) -->
   <div class="action" onclick="lockedTransfer()">
-    <i class="fa fa-paper-plane"></i>
-    Transfer
+    <i class="fa fa-paper-plane"></i> Transfer
   </div>
-
-  <!-- TICKET (NO CHANGE) -->
   <div class="action">
-    <i class="fa fa-ticket"></i>
-    Ticket
+    <i class="fa fa-ticket"></i> Ticket
   </div>
-
-  <!-- PROFILE -->
   <div class="action orange" onclick="openProfile()">
-    <i class="fa fa-user"></i>
-    Profile
+    <i class="fa fa-user"></i> Profile
   </div>
-
 </div>
 
-<!-- BALANCES -->
 <div class="card green">
   <p>Account Balance</p>
   <h2 id="accountBalance"></h2>
@@ -56,38 +40,62 @@
   <h2 id="ledgerBalance"></h2>
 </div>
 
-<!-- FLOATING BUTTONS -->
-<a class="fab whatsapp" title="WhatsApp Support">
-  <i class="fab fa-whatsapp"></i>
-</a>
-
-<a class="fab chat" title="Live Chat">
-  <i class="fa fa-comment"></i>
-</a>
-
 <!-- PROFILE MODAL -->
 <div id="profileModal" class="profile-modal">
   <div class="profile-card">
-
     <span class="close" onclick="closeProfile()">×</span>
-
-    <img
-      src="https://swiftdelivery8.wordpress.com/wp-content/uploads/2025/12/img-20250921-wa00001365510559851195658.jpg"
-      alt="Profile Picture">
-
+    <img src="https://swiftdelivery8.wordpress.com/wp-content/uploads/2025/12/img-20250921-wa00001365510559851195658.jpg">
     <h3>Dr. Andrew Martinz</h3>
     <p><strong>Email:</strong> andrew.martinz@gmail.com</p>
     <p><strong>Country:</strong> United States of America</p>
-    <p><strong>Occupation:</strong><br>
-       Orthopedic Surgeon<br>
-       United States Army
-    </p>
-
+    <p><strong>Occupation:</strong><br>Orthopedic Surgeon<br>United States Army</p>
   </div>
 </div>
 
-<!-- SCRIPT -->
-<script src="app.js"></script>
+<!-- INLINE JS (FORCED EXECUTION) -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  if (!localStorage.getItem("loggedIn")) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  const user = {
+    firstName: "Andrew",
+    accountBalance: 5,000,000,
+    ledgerBalance: 5,000,000
+  };
+
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good Morning" :
+    hour < 17 ? "Good Afternoon" :
+    "Good Evening";
+
+  document.getElementById("welcome").textContent =
+    greeting + ", " + user.firstName;
+
+  document.getElementById("accountBalance").textContent =
+    "$" + user.accountBalance.toLocaleString();
+
+  document.getElementById("ledgerBalance").textContent =
+    "$" + user.ledgerBalance.toLocaleString();
+});
+
+function lockedTransfer() {
+  alert("🔐 Account locked.\nPlease contact support.");
+}
+
+function openProfile() {
+  document.getElementById("profileModal").style.display = "block";
+}
+
+function closeProfile() {
+  document.getElementById("profileModal").style.display = "none";
+}
+</script>
+
 </body>
 </html>
 
