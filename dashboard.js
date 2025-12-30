@@ -1,30 +1,40 @@
+
 import { onAuthStateChanged } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import { doc, getDoc } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import { auth, db } from "firebase.js";
+import { auth, db } from "./firebase.js";
+
+console.log("Dashboard JS loaded");
 
 onAuthStateChanged(auth, async (user) => {
+  console.log("Auth state:", user);
+
   if (!user) {
+    console.log("No user, redirecting");
     window.location.href = "index.html";
     return;
   }
 
-  const snap = await getDoc(doc(db, "users", user.uid));
-  if (!snap.exists()) return;
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+
+  console.log("Firestore snapshot exists:", snap.exists());
+
+  if (!snap.exists()) {
+    alert("User profile not found in database.");
+    return;
+  }
 
   const data = snap.data();
+  console.log("User data:", data);
 
-  const hour = new Date().getHours();
-  const greet =
-    hour < 12 ? "Good Morning" :
-    hour < 17 ? "Good Afternoon" :
-    "Good Evening";
+  document.body.style.background = "#f4f6f8"; // force visible background
 
   document.getElementById("welcome").textContent =
-    `${greet}, ${data.firstName}`;
+    `Welcome, ${data.firstName}`;
 
   document.getElementById("accountBalance").textContent =
     `$${data.balance.toLocaleString()}`;
@@ -36,13 +46,3 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById("fullName").textContent = data.fullName;
   document.getElementById("email").textContent = data.email;
 });
-
-window.lockedTransfer = () =>
-  alert("🔐 Account locked.\nContact support.");
-
-window.openProfile = () =>
-  document.getElementById("profileModal").style.display = "block";
-
-window.closeProfile = () =>
-  document.getElementById("profileModal").style.display = "none";
-
