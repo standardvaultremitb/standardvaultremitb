@@ -4,67 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secure Login</title>
-
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+<body>
 
-<body class="auth">
-
-<div class="login-wrapper">
-
-  <div class="login-card">
-
-    <h2>Welcome Back</h2>
-    <p class="subtitle">Sign in to your account</p>
-
-    <div class="input-group">
-      <i class="fa fa-envelope"></i>
-      <input type="email" id="email" placeholder="Email address">
-    </div>
-
-    <div class="input-group">
-      <i class="fa fa-lock"></i>
-      <input type="password" id="password" placeholder="Password">
-    </div>
-
-    <button onclick="login()">Login</button>
-
-  </div>
-
+<div class="login-box">
+  <h2>Welcome Back</h2>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p id="error"></p>
 </div>
 
-<script>
-  /* =========================
-   FRONTEND LOGIN (SAFE)
-========================= */
-function login() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (email === "andrew.martinz@gmail.com" && password === "Andrew12!") {
-
-    const userData = {
-      fullName: "Dr. Andrew Martinz",
-      firstName: "Andrew",
-      email: "andrew.martinz@gmail.com",
-      country: "United States of America",
-      occupation: "Orthopedic Surgeon",
-      organization: "United States Army",
-      accountBalance: 5,210,000,
-      ledgerBalance: 5,210,000
-    };
-
-    localStorage.setItem("loggedIn", "true");
-    localStorage.setItem("userData", JSON.stringify(userData));
-
-    window.location.href = "dashboard.html";
-  } else {
-    alert("Invalid email or password");
-  }
-}
-</script>
-
+<script type="module" src="firebase.js"></script>
+<script type="module" src="auth.js"></script>
 </body>
 </html>
 
