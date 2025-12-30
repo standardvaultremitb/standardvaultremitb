@@ -4,47 +4,91 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
+
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
+<!-- TOP BAR -->
 <div class="top-bar">
-  <span id="welcome"></span>
-  <div class="avatar" onclick="openProfile()"></div>
+  <i class="fa fa-bars"></i>
+
+  <span class="language">EN</span>
+
+  <img id="avatarTop" class="avatar" src="" alt="Profile">
 </div>
 
-<div class="actions">
-  <div class="action" onclick="lockedTransfer()">
-    <i class="fa fa-paper-plane"></i> Transfer
+<!-- MAIN DASHBOARD -->
+<div class="dashboard">
+
+  <!-- WELCOME -->
+  <div class="welcome" id="welcome"></div>
+
+  <!-- BALANCES -->
+  <div class="balance-cards">
+    <div class="card green">
+      <p>Account Balance</p>
+      <h2 id="accountBalance">$0.00</h2>
+    </div>
+
+    <div class="card teal">
+      <p>Ledger Balance</p>
+      <h2 id="ledgerBalance">$0.00</h2>
+    </div>
   </div>
-  <div class="action orange" onclick="openProfile()">
-    <i class="fa fa-user"></i> Profile
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <div class="action" onclick="lockedTransfer()">
+      <i class="fa fa-paper-plane"></i>
+      <span>Transfer</span>
+    </div>
+
+    <div class="action">
+      <i class="fa fa-ticket"></i>
+      <span>Ticket</span>
+    </div>
+
+    <div class="action orange" onclick="openProfile()">
+      <i class="fa fa-user"></i>
+      <span>Profile</span>
+    </div>
   </div>
-</div>
 
-<div class="card green">
-  <p>Account Balance</p>
-  <h2 id="accountBalance"></h2>
-</div>
-
-<div class="card teal">
-  <p>Ledger Balance</p>
-  <h2 id="ledgerBalance"></h2>
 </div>
 
 <!-- PROFILE MODAL -->
-<div id="profileModal" class="modal">
+<div class="modal" id="profileModal">
   <div class="modal-content">
-    <img id="profilePic">
-    <h3 id="fullName"></h3>
-    <p id="email"></p>
-    <p>USA · Orthopedic Surgeon (US Army)</p>
-    <button onclick="closeProfile()">Close</button>
+    <span class="close" onclick="closeProfile()">&times;</span>
+
+    <img id="profilePic" class="profile-pic">
+
+    <h3 id="profileName"></h3>
+    <p id="profileEmail"></p>
+
+    <ul class="profile-details">
+      <li><strong>Country:</strong> <span id="profileCountry"></span></li>
+      <li><strong>Occupation:</strong> <span id="profileOccupation"></span></li>
+      <li><strong>Organization:</strong> <span id="profileOrg"></span></li>
+    </ul>
   </div>
 </div>
 
-<script type="module" src="dashboard.js"></script>
+<!-- FLOATING BUTTONS -->
+<a class="fab whatsapp" href="https://wa.me/1234567890" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<a class="fab chat">
+  <i class="fa fa-comment"></i>
+</a>
+
+<script src="firebase.js"></script>
+<script src="dashboard.js"></script>
+<script src="ui.js"></script>
 </body>
 </html>
 
