@@ -7,6 +7,10 @@ const demoUser = {
   ledgerBalance: $400,000.00
 };
 
+function lockedTransfer() {
+  alert("🔐 Account locked.\nPlease contact support.");
+}
+
 // LOGIN FUNCTION (unchanged)
 function login() {
   const email = document.getElementById("email").value;
