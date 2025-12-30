@@ -4,29 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secure Login</title>
+
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body class="auth">
 
-<div class="login-container">
+<div class="login-wrapper">
 
-  
   <div class="login-card">
-    <h2>Welcome Back</h2>
-    <p class="subtitle">Sign in to continue</p>
 
-    <input id="email" type="email" placeholder="Email address">
-    <input id="password" type="password" placeholder="Password">
+    <h2>Welcome Back</h2>
+    <p class="subtitle">Sign in to your account</p>
+
+    <div class="input-group">
+      <i class="fa fa-envelope"></i>
+      <input type="email" id="email" placeholder="Email address">
+    </div>
+
+    <div class="input-group">
+      <i class="fa fa-lock"></i>
+      <input type="password" id="password" placeholder="Password">
+    </div>
 
     <button onclick="login()">Login</button>
 
-    
   </div>
 
 </div>
 
-<script src="app.js"></script>
+<script>
+/* =========================
+   FRONTEND LOGIN (SAFE)
+========================= */
+function login() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  // Demo credentials
+  if (email === "andrew.martinz@gmail.com" && password === "Andrew12!") {
+    localStorage.setItem("loggedIn", "true");
+    window.location.href = "dashboard.html";
+  } else {
+    alert("Invalid email or password");
+  }
+}
+</script>
+
 </body>
 </html>
 
