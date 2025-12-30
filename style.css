@@ -206,4 +206,53 @@ button {
   margin-top: 15px;
 }
 
+/* PROFILE MODAL */
+.profile-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+}
+
+.profile-card {
+  background: #111;
+  color: #fff;
+  width: 90%;
+  max-width: 320px;
+  margin: 80px auto;
+  padding: 25px;
+  border-radius: 18px;
+  text-align: center;
+  position: relative;
+}
+
+.profile-card img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.profile-card h3 {
+  margin: 10px 0;
+}
+
+.profile-card p {
+  font-size: 13px;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
 
