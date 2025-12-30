@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  /* =========================
-     LOGIN PROTECTION
-  ========================= */
+  // AUTH CHECK
   if (window.location.pathname.includes("dashboard.html")) {
     if (!localStorage.getItem("loggedIn")) {
       window.location.href = "index.html";
@@ -10,53 +8,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  /* =========================
-     DEMO USER DATA
-  ========================= */
-  const userData = {
-    fullName: "Dr. Andrew Martinz",
-    firstName: "Andrew",
-    email: "andrew.martinz@gmail.com",
-    accountBalance: 5000000,
-    ledgerBalance: 5000000
-  };
+  // FETCH USER DATA
+  const storedUser = localStorage.getItem("userData");
+  if (!storedUser) return;
 
-  /* =========================
-     GREETING
-  ========================= */
+  const user = JSON.parse(storedUser);
+
+  // GREETING
   const welcomeEl = document.getElementById("welcome");
   if (welcomeEl) {
     const hour = new Date().getHours();
-    let greeting =
+    const greeting =
       hour < 12 ? "Good Morning" :
       hour < 17 ? "Good Afternoon" :
       "Good Evening";
 
-    welcomeEl.textContent = `${greeting}, ${userData.firstName}`;
+    welcomeEl.textContent = `${greeting}, ${user.firstName}`;
   }
 
-  /* =========================
-     BALANCES
-  ========================= */
-  const accountBalanceEl = document.getElementById("accountBalance");
-  const ledgerBalanceEl = document.getElementById("ledgerBalance");
+  // BALANCES
+  const acc = document.getElementById("accountBalance");
+  const led = document.getElementById("ledgerBalance");
 
-  if (accountBalanceEl) {
-    accountBalanceEl.textContent =
-      `$${userData.accountBalance.toLocaleString()}`;
-  }
-
-  if (ledgerBalanceEl) {
-    ledgerBalanceEl.textContent =
-      `$${userData.ledgerBalance.toLocaleString()}`;
-  }
-
+  if (acc) acc.textContent = `$${user.accountBalance.toLocaleString()}`;
+  if (led) led.textContent = `$${user.ledgerBalance.toLocaleString()}`;
 });
 
-/* =========================
-   GLOBAL ACTION FUNCTIONS
-   (MUST be outside DOMContentLoaded)
-========================= */
+/* ACTIONS */
 function lockedTransfer() {
   alert("🔐 Account locked.\nPlease contact support.");
 }
