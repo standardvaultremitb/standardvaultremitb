@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
     fullName: "Dr. Andrew Martinz",
     firstName: "Andrew",
     email: "andrew.martinz@gmail.com",
-    accountBalance: 5,000,000,
-    ledgerBalance: 5,000,000
+    accountBalance: 5000000,
+    ledgerBalance: 5000000
   };
 
   /* =========================
