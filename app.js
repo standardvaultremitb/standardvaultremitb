@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
      DEMO USER DATA
   ========================= */
   const userData = {
-    fullName: "Dr. Michael Bernard",
-    firstName: "Michael",
-    email: "user@demo.com",
-    accountBalance: 400000,
-    ledgerBalance: 400000
+    fullName: "Dr. Andrew Martinz",
+    firstName: "Andrew",
+    email: "andrew.martinz@gmail.com",
+    accountBalance: 5,000,000,
+    ledgerBalance: 5,000,000
   };
 
   /* =========================
