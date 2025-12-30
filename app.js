@@ -1,32 +1,35 @@
-// EMBEDDED USER DATA
-const demoUser = {
-  email: "andrew.martinz@gmail.com",
-  password: "Andrew12!",
-  name: "Andrew Martinz",
-  accountBalance: $400,000.00,
-  ledgerBalance: $400,000.00
-};
+/* =========================
+   BASIC LOGIN PROTECTION
+========================= */
+(function () {
+  const isDashboard = window.location.pathname.includes("dashboard");
 
-// LOGIN FUNCTION (unchanged)
-function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (email === demoUser.email && password === demoUser.password) {
-    localStorage.setItem("loggedIn", "true");
-    window.location.href = "dashboard.html";
-  } else {
-    alert("Invalid login details");
-  }
-}
-
-// DASHBOARD LOAD
-if (window.location.pathname.includes("dashboard")) {
-  if (!localStorage.getItem("loggedIn")) {
+  if (isDashboard && !localStorage.getItem("loggedIn")) {
     window.location.href = "index.html";
   }
+})();
 
-  // TIME-BASED GREETING
+/* =========================
+   DEMO USER DATA
+========================= */
+const userData = {
+  fullName: "Dr. Andrew Martinz",
+  firstName: "Amdrew",
+  email: "andrew.martinz@gmail.com",
+  country: "United States of America",
+  occupation: "Orthopedic Surgeon",
+  organization: "United States Army",
+  accountBalance: $400,000,
+  ledgerBalance: $400,000
+};
+
+/* =========================
+   TIME-BASED GREETING
+========================= */
+(function setGreeting() {
+  const welcomeEl = document.getElementById("welcome");
+  if (!welcomeEl) return;
+
   const hour = new Date().getHours();
   let greeting;
 
@@ -38,26 +41,60 @@ if (window.location.pathname.includes("dashboard")) {
     greeting = "Good Evening";
   }
 
-  document.getElementById("welcome").innerText =
-    `${greeting}, Welcome back! ${demoUser.name.split(" ")[0]}`;
+  welcomeEl.textContent = `${greeting}, ${userData.firstName}`;
+})();
 
-  document.getElementById("accountBalance").innerText =
-    `$${demoUser.accountBalance.toLocaleString()}`;
+/* =========================
+   BALANCE DISPLAY
+========================= */
+(function setBalances() {
+  const acc = document.getElementById("accountBalance");
+  const led = document.getElementById("ledgerBalance");
 
-  document.getElementById("ledgerBalance").innerText =
-    `$${demoUser.ledgerBalance.toLocaleString()}`;
-};
+  if (acc) {
+    acc.textContent = `$${userData.accountBalance.toLocaleString()}`;
+  }
+
+  if (led) {
+    led.textContent = `$${userData.ledgerBalance.toLocaleString()}`;
+  }
+})();
+
+/* =========================
+   ACTIONS
+========================= */
 function lockedTransfer() {
   alert("🔐 Account locked.\nPlease contact support.");
 }
 
+/* =========================
+   PROFILE MODAL CONTROLS
+========================= */
 function openProfile() {
-  document.getElementById("profileModal").style.display = "block";
+  const modal = document.getElementById("profileModal");
+  if (modal) modal.style.display = "block";
 }
 
 function closeProfile() {
-  document.getElementById("profileModal").style.display = "none";
+  const modal = document.getElementById("profileModal");
+  if (modal) modal.style.display = "none";
 }
 
+/* =========================
+   CLICK OUTSIDE TO CLOSE
+========================= */
+window.addEventListener("click", function (e) {
+  const modal = document.getElementById("profileModal");
+  if (modal && e.target === modal) {
+    modal.style.display = "none";
+  }
+});
 
+/* =========================
+   OPTIONAL: LOGOUT (READY)
+========================= */
+// function logout() {
+//   localStorage.removeItem("loggedIn");
+//   window.location.href = "index.html";
+// }
 
