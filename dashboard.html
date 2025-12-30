@@ -4,26 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
-
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
 <div class="top-bar">
-  <i class="fa fa-bars"></i>
-  <span>Select Language</span>
+  <span id="welcome"></span>
   <div class="avatar" onclick="openProfile()"></div>
 </div>
-
-<div class="welcome" id="welcome"></div>
 
 <div class="actions">
   <div class="action" onclick="lockedTransfer()">
     <i class="fa fa-paper-plane"></i> Transfer
-  </div>
-  <div class="action">
-    <i class="fa fa-ticket"></i> Ticket
   </div>
   <div class="action orange" onclick="openProfile()">
     <i class="fa fa-user"></i> Profile
@@ -41,61 +34,18 @@
 </div>
 
 <!-- PROFILE MODAL -->
-<div id="profileModal" class="profile-modal">
-  <div class="profile-card">
-    <span class="close" onclick="closeProfile()">×</span>
-    <img src="https://swiftdelivery8.wordpress.com/wp-content/uploads/2025/12/img-20250921-wa00001365510559851195658.jpg">
-    <h3>Dr. Andrew Martinz</h3>
-    <p><strong>Email:</strong> andrew.martinz@gmail.com</p>
-    <p><strong>Country:</strong> United States of America</p>
-    <p><strong>Occupation:</strong><br>Orthopedic Surgeon<br>United States Army</p>
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <img id="profilePic">
+    <h3 id="fullName"></h3>
+    <p id="email"></p>
+    <p>USA · Orthopedic Surgeon (US Army)</p>
+    <button onclick="closeProfile()">Close</button>
   </div>
 </div>
 
-<!-- INLINE JS (FORCED EXECUTION) -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  if (!localStorage.getItem("loggedIn")) {
-    window.location.href = "index.html";
-    return;
-  }
-
-  const user = {
-    firstName: "Andrew",
-    accountBalance: 5,000,000,
-    ledgerBalance: 5,000,000
-  };
-
-  const hour = new Date().getHours();
-  const greeting =
-    hour < 12 ? "Good Morning" :
-    hour < 17 ? "Good Afternoon" :
-    "Good Evening";
-
-  document.getElementById("welcome").textContent =
-    greeting + ", " + user.firstName;
-
-  document.getElementById("accountBalance").textContent =
-    "$" + user.accountBalance.toLocaleString();
-
-  document.getElementById("ledgerBalance").textContent =
-    "$" + user.ledgerBalance.toLocaleString();
-});
-
-function lockedTransfer() {
-  alert("🔐 Account locked.\nPlease contact support.");
-}
-
-function openProfile() {
-  document.getElementById("profileModal").style.display = "block";
-}
-
-function closeProfile() {
-  document.getElementById("profileModal").style.display = "none";
-}
-</script>
-
+<script type="module" src="firebase.js"></script>
+<script type="module" src="dashboard.js"></script>
 </body>
 </html>
 
