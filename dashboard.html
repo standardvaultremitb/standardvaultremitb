@@ -3,31 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+<title>User Dashboard</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
 
+</head>
 <body>
 
-<!-- TOP BAR -->
-<div class="top-bar">
-  <i class="fa fa-bars"></i>
+<!-- HEADER -->
+<div class="header">
 
-  <span class="language">EN</span>
+  <div class="header-top">
+    <!-- Google Translate -->
+    <div id="google_translate_element"></div>
 
-  <img id="avatarTop" class="avatar" src="" alt="Profile">
+    <!-- Profile Avatar -->
+    <img id="avatarTop" class="avatar" src="" alt="Profile" onclick="openProfile()">
+  </div>
+
+  <!-- Greeting -->
+  <p class="greeting" id="welcome">Welcome</p>
+
+  <!-- Quick Text Actions -->
+  <p class="quick-actions">
+    <span onclick="lockedTransfer()">Transfer</span> ·
+    <span>Open Ticket</span> ·
+    <span onclick="openProfile()">Profile</span>
+  </p>
+
 </div>
 
-<!-- MAIN DASHBOARD -->
+<!-- DASHBOARD CONTENT -->
 <div class="dashboard">
 
-  <!-- WELCOME -->
-  <div class="welcome" id="welcome"></div>
-
-  <!-- BALANCES -->
+  <!-- BALANCE CARDS -->
   <div class="balance-cards">
+
     <div class="card green">
       <p>Account Balance</p>
       <h2 id="accountBalance">$0.00</h2>
@@ -37,24 +49,7 @@
       <p>Ledger Balance</p>
       <h2 id="ledgerBalance">$0.00</h2>
     </div>
-  </div>
 
-  <!-- ACTIONS -->
-  <div class="actions">
-    <div class="action" onclick="lockedTransfer()">
-      <i class="fa fa-paper-plane"></i>
-      <span>Transfer</span>
-    </div>
-
-    <div class="action">
-      <i class="fa fa-ticket"></i>
-      <span>Ticket</span>
-    </div>
-
-    <div class="action orange" onclick="openProfile()">
-      <i class="fa fa-user"></i>
-      <span>Profile</span>
-    </div>
   </div>
 
 </div>
@@ -62,9 +57,10 @@
 <!-- PROFILE MODAL -->
 <div class="modal" id="profileModal">
   <div class="modal-content">
+
     <span class="close" onclick="closeProfile()">&times;</span>
 
-    <img id="profilePic" class="profile-pic">
+    <img id="profilePic" class="profile-pic" src="">
 
     <h3 id="profileName"></h3>
     <p id="profileEmail"></p>
@@ -74,10 +70,25 @@
       <li><strong>Occupation:</strong> <span id="profileOccupation"></span></li>
       <li><strong>Organization:</strong> <span id="profileOrg"></span></li>
     </ul>
+
+    <button onclick="logout()" style="
+      margin-top:15px;
+      padding:10px;
+      width:100%;
+      border:none;
+      border-radius:10px;
+      background:#ef4444;
+      color:#fff;
+      font-size:14px;
+      cursor:pointer;
+    ">
+      Logout
+    </button>
+
   </div>
 </div>
 
-<!-- FLOATING BUTTONS -->
+<!-- FLOATING SUPPORT BUTTONS -->
 <a class="fab whatsapp" href="https://wa.me/1234567890" target="_blank">
   <i class="fab fa-whatsapp"></i>
 </a>
@@ -86,9 +97,22 @@
   <i class="fa fa-comment"></i>
 </a>
 
+<!-- GOOGLE TRANSLATE -->
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement(
+    { pageLanguage: 'en' },
+    'google_translate_element'
+  );
+}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- SCRIPTS -->
 <script src="firebase.js"></script>
 <script src="dashboard.js"></script>
 <script src="ui.js"></script>
+
 </body>
 </html>
 
