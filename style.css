@@ -132,3 +132,78 @@ button {
   right: 20px;
   background: #2563eb;
 }
+/* LOGIN PAGE */
+.login-container {
+  width: 100%;
+  max-width: 380px;
+  margin: auto;
+  padding: 20px;
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+
+.brand p {
+  opacity: 0.7;
+  font-size: 13px;
+}
+
+.login-card {
+  background: rgba(255,255,255,0.12);
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+.login-card h2 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-card button:hover {
+  opacity: 0.9;
+}
+
+.demo {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 15px;
+}
+
+
