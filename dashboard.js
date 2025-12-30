@@ -1,48 +1,81 @@
+/* ===============================
+   DASHBOARD DATA FETCH (FIREBASE)
+================================ */
 
-import { onAuthStateChanged } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import { doc, getDoc } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-import { auth, db } from "./firebase.js";
-
-console.log("Dashboard JS loaded");
-
-onAuthStateChanged(auth, async (User) => {
-  console.log("Auth state:", User);
-
-  if (!User) {
-    console.log("No user, redirecting");
+firebase.auth().onAuthStateChanged(async (user) => {
+  if (!user) {
+    // Not logged in → redirect
     window.location.href = "index.html";
     return;
   }
 
-  const ref = doc(db, "User", User.uid);
-  const snap = await getDoc(ref);
+  try {
+    // Fetch user document from Firestore
+    const docRef = firebase.firestore().collection("User").doc(user.uid);
+    const docSnap = await docRef.get();
 
-  console.log("Firestore snapshot exists:", snap.exists());
+    if (!docSnap.exists) {
+      console.error("User document not found");
+      return;
+    }
 
-  if (!snap.exists()) {
-    alert("User profile not found in database.");
-    return;
+    const data = docSnap.data();
+
+    /* ===============================
+       GREETING
+    ================================ */
+    const welcomeEl = document.getElementById("welcome");
+    if (welcomeEl && data.firstName) {
+      const hour = new Date().getHours();
+      const greeting =
+        hour < 12 ? "Good Morning" :
+        hour < 17 ? "Good Afternoon" :
+        "Good Evening";
+
+      welcomeEl.textContent = `${greeting}, ${data.firstName}`;
+    }
+
+    /* ===============================
+       BALANCES
+    ================================ */
+    const accountBalanceEl = document.getElementById("accountBalance");
+    const ledgerBalanceEl = document.getElementById("ledgerBalance");
+
+    if (accountBalanceEl && typeof data.balance === "number") {
+      accountBalanceEl.textContent = `$${data.balance.toLocaleString()}`;
+    }
+
+    if (ledgerBalanceEl && typeof data.ledger === "number") {
+      ledgerBalanceEl.textContent = `$${data.ledger.toLocaleString()}`;
+    }
+
+    /* ===============================
+       PROFILE AVATAR (TOP BAR)
+    ================================ */
+    const avatarTop = document.getElementById("avatarTop");
+    if (avatarTop && data.photo) {
+      avatarTop.src = data.photo;
+    }
+
+    /* ===============================
+       PROFILE MODAL DETAILS
+    ================================ */
+    const profilePic = document.getElementById("profilePic");
+    const profileName = document.getElementById("profileName");
+    const profileEmail = document.getElementById("profileEmail");
+    const profileCountry = document.getElementById("profileCountry");
+    const profileOccupation = document.getElementById("profileOccupation");
+    const profileOrg = document.getElementById("profileOrg");
+
+    if (profilePic && data.photo) profilePic.src = data.photo;
+    if (profileName) profileName.textContent = data.fullName || "";
+    if (profileEmail) profileEmail.textContent = data.email || "";
+    if (profileCountry) profileCountry.textContent = data.country || "";
+    if (profileOccupation) profileOccupation.textContent = data.occupation || "";
+    if (profileOrg) profileOrg.textContent = data.organization || "";
+
+  } catch (error) {
+    console.error("Error loading dashboard:", error);
   }
-
-  const data = snap.data();
-  console.log("User data:", data);
-
-  document.body.style.background = "#f4f6f8"; // force visible background
-
-  document.getElementById("welcome").textContent =
-    `Welcome, ${data.firstName}`;
-
-  document.getElementById("accountBalance").textContent =
-    `$${data.balance.toLocaleString()}`;
-
-  document.getElementById("ledgerBalance").textContent =
-    `$${data.ledger.toLocaleString()}`;
-
-  document.getElementById("profilePic").src = data.photo;
-  document.getElementById("fullName").textContent = data.fullName;
-  document.getElementById("email").textContent = data.email;
 });
+
