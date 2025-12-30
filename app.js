@@ -3,8 +3,8 @@ const demoUser = {
   email: "andrew.martinz@gmail.com",
   password: "Andrew12!",
   name: "Andrew Martinz",
-  accountBalance: 400000,
-  ledgerBalance: 400000
+  accountBalance: $400,000.00,
+  ledgerBalance: $400,000.00
 };
 
 // LOGIN FUNCTION (unchanged)
