@@ -1,258 +1,213 @@
-* { box-sizing: border-box; }
+/* ===============================
+   GLOBAL RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
 
 body {
-  margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(180deg, #0b0f2f, #111827);
+  background: #f4f6fb;
+  color: #111827;
+  min-height: 100vh;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.header {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 16px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Google Translate override */
+#google_translate_element {
+  font-size: 12px;
   color: #fff;
 }
 
-/* AUTH */
-.auth {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+.goog-te-gadget {
+  color: #fff !important;
 }
 
-.auth-box {
-  background: rgba(255,255,255,0.1);
-  padding: 25px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 350px;
+.goog-te-gadget span {
+  display: none;
 }
 
-.auth-box input, button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 8px;
+.goog-te-gadget select {
+  background: #1e293b;
+  color: #fff;
   border: none;
-}
-
-button {
-  background: #22c55e;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.hint {
+  padding: 6px 8px;
+  border-radius: 6px;
   font-size: 12px;
-  opacity: 0.7;
-  margin-top: 10px;
 }
 
-/* TOP BAR */
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px;
-}
-
+/* Profile Avatar */
 .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-image: url("https://swiftdelivery8.wordpress.com/wp-content/uploads/2025/12/img-20250921-wa00001365510559851195658.jpg");
-  background-size: cover;
-  background-position: center;
-  border: 2px solid rgba(255,255,255,0.5);
+  object-fit: cover;
+  border: 2px solid #22c55e;
+  cursor: pointer;
 }
 
-/* WELCOME */
-.welcome {
-  background: #1dd3f8;
-  color: #000;
-  margin: 15px;
-  padding: 15px;
-  border-radius: 10px;
-  font-weight: bold;
+/* Greeting */
+.greeting {
+  margin-top: 14px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-/* ACTIONS */
-.actions {
-  display: flex;
-  gap: 10px;
-  padding: 0 15px;
+/* Quick Actions Text */
+.quick-actions {
+  margin-top: 6px;
+  font-size: 14px;
+  opacity: 0.9;
 }
 
-.action {
-  flex: 1;
-  background: #fff;
-  color: #333;
-  text-align: center;
-  padding: 15px 5px;
-  border-radius: 12px;
-  font-size: 13px;
+.quick-actions span {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
-.action i {
-  display: block;
-  margin-bottom: 5px;
-  color: #3b82f6;
+/* ===============================
+   DASHBOARD CONTENT
+================================ */
+.dashboard {
+  padding: 18px;
 }
 
-.orange {
-  background: #f59e0b;
-  color: #fff;
+/* Balance Cards */
+.balance-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
 }
 
-/* BALANCE CARDS */
 .card {
-  margin: 15px;
-  padding: 20px;
-  border-radius: 15px;
+  border-radius: 16px;
+  padding: 18px;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-.green { background: #2e7d32; }
-.teal { background: #006064; }
+.card p {
+  font-size: 13px;
+  opacity: 0.9;
+}
 
-/* FLOATING BUTTONS */
+.card h2 {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.green {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+
+.teal {
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
+}
+
+/* ===============================
+   PROFILE MODAL
+================================ */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #ffffff;
+  margin: 18% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 360px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.close {
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 3px solid #22c55e;
+}
+
+.profile-details {
+  list-style: none;
+  text-align: left;
+  margin-top: 12px;
+}
+
+.profile-details li {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* ===============================
+   FLOATING ACTION BUTTONS
+================================ */
 .fab {
   position: fixed;
-  bottom: 20px;
-  width: 55px;
-  height: 55px;
+  right: 18px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  color: #fff;
+  color: #ffffff;
+  font-size: 20px;
+  z-index: 900;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
 }
 
 .whatsapp {
-  left: 20px;
+  bottom: 90px;
   background: #25d366;
 }
 
 .chat {
-  right: 20px;
-  background: #2563eb;
-}
-/* LOGIN PAGE */
-.login-container {
-  width: 100%;
-  max-width: 380px;
-  margin: auto;
-  padding: 20px;
+  bottom: 30px;
+  background: #0ea5e9;
 }
 
-.brand {
-  text-align: center;
-  margin-bottom: 25px;
-}
+/* ===============================
+   RESPONSIVE (TABLET+)
+================================ */
+@media (min-width: 600px) {
+  .balance-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-.brand h1 {
-  margin: 0;
-  font-size: 28px;
-  letter-spacing: 1px;
-}
-
-.brand p {
-  opacity: 0.7;
-  font-size: 13px;
-}
-
-.login-card {
-  background: rgba(255,255,255,0.12);
-  padding: 25px;
-  border-radius: 18px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-}
-
-.login-card h2 {
-  margin-top: 0;
-  margin-bottom: 5px;
-}
-
-.subtitle {
-  font-size: 13px;
-  opacity: 0.7;
-  margin-bottom: 20px;
-}
-
-.login-card input {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  font-size: 14px;
-}
-
-.login-card button {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.login-card button:hover {
-  opacity: 0.9;
-}
-
-.demo {
-  text-align: center;
-  font-size: 12px;
-  opacity: 0.7;
-  margin-top: 15px;
-}
-
-/* PROFILE MODAL */
-.profile-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100%;
-  background: rgba(0,0,0,0.6);
-  z-index: 1000;
-}
-
-.profile-card {
-  background: #111;
-  color: #fff;
-  width: 90%;
-  max-width: 320px;
-  margin: 80px auto;
-  padding: 25px;
-  border-radius: 18px;
-  text-align: center;
-  position: relative;
-}
-
-.profile-card img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 15px;
-}
-
-.profile-card h3 {
-  margin: 10px 0;
-}
-
-.profile-card p {
-  font-size: 13px;
-  opacity: 0.85;
-  line-height: 1.5;
-}
-
-.close {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  font-size: 22px;
-  cursor: pointer;
+  .modal-content {
+    margin-top: 12%;
+  }
 }
 
