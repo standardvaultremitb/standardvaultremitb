@@ -18,7 +18,7 @@ onAuthStateChanged(auth, async (User) => {
     return;
   }
 
-  const ref = doc(db, "users", User.uid);
+  const ref = doc(db, "User", User.uid);
   const snap = await getDoc(ref);
 
   console.log("Firestore snapshot exists:", snap.exists());
