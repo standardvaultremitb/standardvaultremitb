@@ -3,110 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Dashboard</title>
+<title>Dashboard</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-</head>
-<body>
-
-<!-- HEADER -->
-<div class="header">
-
-  <div class="header-top">
-    <!-- Google Translate -->
-    <div id="google_translate_element"></div>
-
-    <!-- Profile Avatar -->
-    <img id="avatarTop" class="avatar" src="" alt="Profile" onclick="openProfile()">
-  </div>
-
-  <!-- Greeting -->
-  <p class="greeting" id="welcome">Welcome</p>
-
-  <!-- Quick Text Actions -->
-  <p class="quick-actions">
-    <span onclick="lockedTransfer()">Transfer</span> ·
-    <span>Open Ticket</span> ·
-    <span onclick="openProfile()">Profile</span>
-  </p>
-
-</div>
-
-<!-- DASHBOARD CONTENT -->
-<div class="dashboard">
-
-  <!-- BALANCE CARDS -->
-  <div class="balance-cards">
-
-    <div class="card green">
-      <p>Account Balance</p>
-      <h2 id="accountBalance">$0.00</h2>
-    </div>
-
-    <div class="card teal">
-      <p>Ledger Balance</p>
-      <h2 id="ledgerBalance">$0.00</h2>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- PROFILE MODAL -->
-<div class="modal" id="profileModal">
-  <div class="modal-content">
-
-    <span class="close" onclick="closeProfile()">&times;</span>
-
-    <img id="profilePic" class="profile-pic" src="">
-
-    <h3 id="profileName"></h3>
-    <p id="profileEmail"></p>
-
-    <ul class="profile-details">
-      <li><strong>Country:</strong> <span id="profileCountry"></span></li>
-      <li><strong>Occupation:</strong> <span id="profileOccupation"></span></li>
-      <li><strong>Organization:</strong> <span id="profileOrg"></span></li>
-    </ul>
-
-    <button onclick="logout()" style="
-      margin-top:15px;
-      padding:10px;
-      width:100%;
-      border:none;
-      border-radius:10px;
-      background:#ef4444;
-      color:#fff;
-      font-size:14px;
-      cursor:pointer;
-    ">
-      Logout
-    </button>
-
-  </div>
-</div>
-
-<!-- FLOATING SUPPORT BUTTONS -->
-<a class="fab whatsapp" href="https://wa.me/1234567890" target="_blank">
-  <i class="fab fa-whatsapp"></i>
-</a>
-
-<a class="fab chat">
-  <i class="fa fa-comment"></i>
-</a>
-
-<!-- GOOGLE TRANSLATE -->
-<script>
+<!-- Google Translate -->
+<script type="text/javascript">
 function googleTranslateElementInit() {
   new google.translate.TranslateElement(
-    { pageLanguage: 'en' },
+    {pageLanguage: 'en'},
     'google_translate_element'
   );
 }
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <i class="fa fa-bars"></i>
+
+  <div id="google_translate_element"></div>
+
+  <img id="avatarTop" class="avatar" />
+</div>
+
+<!-- GREETING -->
+<div class="welcome" id="welcome"></div>
+
+<!-- ACTIONS -->
+<div class="actions">
+  <div class="action" id="transferBtn">
+    <i class="fa fa-paper-plane"></i>
+    <span>Transfer</span>
+  </div>
+
+  <div class="action">
+    <i class="fa fa-ticket"></i>
+    <span>Ticket</span>
+  </div>
+
+  <div class="action orange" onclick="openProfile()">
+    <i class="fa fa-user"></i>
+    <span>Profile</span>
+  </div>
+</div>
+
+<!-- BALANCE CARDS -->
+<div class="card green">
+  <p>Account Balance</p>
+  <h2 id="accountBalance">$0</h2>
+</div>
+
+<div class="card teal">
+  <p>Ledger Balance</p>
+  <h2 id="ledgerBalance">$0</h2>
+</div>
+
+<!-- FLOATING BUTTONS -->
+<a class="fab whatsapp"><i class="fab fa-whatsapp"></i></a>
+<a class="fab chat"><i class="fa fa-comment"></i></a>
+
+<!-- PROFILE MODAL -->
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeProfile()">&times;</span>
+    <img id="profilePic">
+    <h3 id="profileName"></h3>
+    <p id="profileEmail"></p>
+    <p id="profileCountry"></p>
+    <p id="profileOccupation"></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+</div>
 
 <!-- SCRIPTS -->
 <script src="firebase.js"></script>
@@ -115,4 +87,3 @@ function googleTranslateElementInit() {
 
 </body>
 </html>
-
