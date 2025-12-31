@@ -19,13 +19,31 @@ onAuthStateChanged(auth, async (user) => {
   const data = snap.data();
 
   /* GREETING */
-  const hour = new Date().getHours();
-  let greeting = "Good evening";
-  if (hour < 12) greeting = "Good morning";
-  else if (hour < 18) greeting = "Good afternoon";
+  document.addEventListener("DOMContentLoaded", () => {
 
-  document.getElementById("welcome").innerText =
-    `${greeting}, ${data.firstName}`;
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "index.html";
+      return;
+    }
+
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+
+    const hour = new Date().getHours();
+    let greeting = "Good evening";
+    if (hour < 12) greeting = "Good morning";
+    else if (hour < 18) greeting = "Good afternoon";
+
+    document.getElementById("welcome").textContent =
+      `${greeting}, ${data.firstName}`;
+
+  });
+
+});
+
 
   /* BALANCES */
   document.getElementById("accountBalance").innerText =
