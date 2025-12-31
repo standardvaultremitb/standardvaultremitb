@@ -163,6 +163,13 @@ body {
   font-size: 22px;
   cursor: pointer;
 }
+#transferModal .modal-content h3 {
+  color: #c0392b;
+}
+
+#transferModal .modal-content p {
+  font-size: 15px;
+}
 
 /* ================= LOGIN PAGE ================= */
 .login-container {
