@@ -36,3 +36,8 @@ function logout() {
     window.location.href = "index.html";
   });
 }
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="dashboard.js"></script>
+<script src="ui.js"></script>
+   
