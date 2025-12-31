@@ -18,21 +18,35 @@ onAuthStateChanged(auth, async (user) => {
 
   const data = snap.data();
 
-/* GREETING */
+/* AUTO-TITLE GREETING */
 const hour = new Date().getHours();
 let greeting = "Good evening";
 if (hour < 12) greeting = "Good morning";
 else if (hour < 18) greeting = "Good afternoon";
 
-const firstName =
-  data.firstName && data.firstName.trim() !== ""
-    ? data.firstName
-    : data.fullName
-      ? data.fullName.split(" ")[0]
-      : "User";
+/* Resolve First Name */
+let firstName = "User";
+if (data.firstName && data.firstName.trim() !== "") {
+  firstName = data.firstName.trim();
+} else if (data.fullName) {
+  firstName = data.fullName.trim().split(" ")[0];
+}
 
+/* Auto-Title Logic */
+let title = "";
+const occupation = (data.occupation || "").toLowerCase();
+
+if (
+  occupation.includes("doctor") ||
+  occupation.includes("surgeon") ||
+  occupation.includes("orthopedic")
+) {
+  title = "Dr. ";
+}
+
+/* Render Greeting */
 document.getElementById("welcome").textContent =
-  `${greeting}, ${firstName}`;
+  `${greeting}, ${title}${firstName}`;
 
 
   /* BALANCES */
