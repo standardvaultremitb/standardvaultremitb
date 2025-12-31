@@ -28,10 +28,13 @@ function closeLoanModal() {
 window.addEventListener("click", function (event) {
   const profileModal = document.getElementById("profileModal");
   const loanModal = document.getElementById("loanModal");
+  const transferModal = document.getElementById("transferModal");
 
   if (event.target === profileModal) profileModal.style.display = "none";
   if (event.target === loanModal) loanModal.style.display = "none";
+  if (event.target === transferModal) transferModal.style.display = "none";
 });
+
 
 /* ===============================
    BUTTON HANDLERS
