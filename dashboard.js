@@ -1,81 +1,65 @@
-/* ===============================
-   DASHBOARD DATA FETCH (FIREBASE)
-================================ */
+document.addEventListener("DOMContentLoaded", () => {
 
-firebase.auth().onAuthStateChanged(async (User) => {
-  if (!User) {
-    // Not logged in → redirect
-    window.location.href = "index.html";
-    return;
-  }
-
-  try {
-    // Fetch user document from Firestore
-    const docRef = firebase.firestore().collection("User").doc(User.uid);
-    const docSnap = await docRef.get();
-
-    if (!docSnap.exists) {
-      console.error("User document not found");
+  firebase.auth().onAuthStateChanged(async (user) => {
+    if (!user) {
+      window.location.href = "index.html";
       return;
     }
 
-    const data = docSnap.data();
+    const uid = user.uid;
 
-    /* ===============================
-       GREETING
-    ================================ */
-    const welcomeEl = document.getElementById("welcome");
-    if (welcomeEl && data.firstName) {
-      const hour = new Date().getHours();
-      const greeting =
-        hour < 12 ? "Good Morning" :
-        hour < 17 ? "Good Afternoon" :
-        "Good Evening";
+    try {
+      const snap = await firebase
+        .firestore()
+        .collection("users")
+        .doc(uid)
+        .get();
 
-      welcomeEl.textContent = `${greeting}, ${data.firstName}`;
+      if (!snap.exists) {
+        alert("User profile not found.");
+        return;
+      }
+
+      const data = snap.data();
+
+      /* GREETING */
+      document.getElementById("welcome").innerText =
+        `${getGreeting()}, ${data.firstName}`;
+
+      /* BALANCES */
+      document.getElementById("accountBalance").innerText =
+        `$${Number(data.balance).toLocaleString()}`;
+
+      document.getElementById("ledgerBalance").innerText =
+        `$${Number(data.ledger).toLocaleString()}`;
+
+      /* AVATAR */
+      document.getElementById("avatarTop").src = data.photo;
+
+      /* PROFILE MODAL */
+      document.getElementById("profileName").innerText = data.fullName;
+      document.getElementById("profileEmail").innerText = data.email;
+      document.getElementById("profileCountry").innerText = data.country;
+      document.getElementById("profileOccupation").innerText =
+        `${data.occupation} (${data.organisation})`;
+
+      /* LOCKED STATUS */
+      if (data.status === "locked") {
+        document.getElementById("transferBtn")
+          .addEventListener("click", lockedTransfer);
+      }
+
+    } catch (e) {
+      console.error("Dashboard load error:", e);
     }
+  });
 
-    /* ===============================
-       BALANCES
-    ================================ */
-    const accountBalanceEl = document.getElementById("accountBalance");
-    const ledgerBalanceEl = document.getElementById("ledgerBalance");
-
-    if (accountBalanceEl && typeof data.balance === "number") {
-      accountBalanceEl.textContent = `$${data.balance.toLocaleString()}`;
-    }
-
-    if (ledgerBalanceEl && typeof data.ledger === "number") {
-      ledgerBalanceEl.textContent = `$${data.ledger.toLocaleString()}`;
-    }
-
-    /* ===============================
-       PROFILE AVATAR (TOP BAR)
-    ================================ */
-    const avatarTop = document.getElementById("avatarTop");
-    if (avatarTop && data.photo) {
-      avatarTop.src = data.photo;
-    }
-
-    /* ===============================
-       PROFILE MODAL DETAILS
-    ================================ */
-    const profilePic = document.getElementById("profilePic");
-    const profileName = document.getElementById("profileName");
-    const profileEmail = document.getElementById("profileEmail");
-    const profileCountry = document.getElementById("profileCountry");
-    const profileOccupation = document.getElementById("profileOccupation");
-    const profileOrg = document.getElementById("profileOrg");
-
-    if (profilePic && data.photo) profilePic.src = data.photo;
-    if (profileName) profileName.textContent = data.fullName || "";
-    if (profileEmail) profileEmail.textContent = data.email || "";
-    if (profileCountry) profileCountry.textContent = data.country || "";
-    if (profileOccupation) profileOccupation.textContent = data.occupation || "";
-    if (profileOrg) profileOrg.textContent = data.organization || "";
-
-  } catch (error) {
-    console.error("Error loading dashboard:", error);
-  }
 });
+
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good Morning";
+  if (hour < 17) return "Good Afternoon";
+  return "Good Evening";
+}
 
