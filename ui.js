@@ -37,25 +37,17 @@ window.addEventListener("click", function (event) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const transferBtn = document.getElementById("transferBtn");
-
   if (transferBtn) {
     transferBtn.addEventListener("click", () => {
       if (window.accountStatus === "locked") {
         alert("Account restricted 🔐\nPlease contact support.");
-      } else {
-        alert("Transfer feature coming soon.");
       }
     });
   }
+
+  const loanStatusBtn = document.getElementById("loanStatusBtn");
+  if (loanStatusBtn) {
+    loanStatusBtn.addEventListener("click", openLoanModal);
+  }
 });
 
-/* LOAN MODAL */
-function openLoanModal() {
-  const modal = document.getElementById("loanModal");
-  if (modal) modal.style.display = "block";
-}
-
-function closeLoanModal() {
-  const modal = document.getElementById("loanModal");
-  if (modal) modal.style.display = "none";
-}
