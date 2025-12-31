@@ -1,39 +1,42 @@
-firebase.auth().onAuthStateChanged(async (user) => {
 
-  if (!user) {
+console.log("dashboard.js loaded");
+
+firebase.auth().onAuthStateChanged(async (users) => {
+
+  console.log("Auth state changed");
+
+  if (!users) {
+    console.log("No user, redirecting");
     window.location.href = "index.html";
     return;
   }
 
+  console.log("Logged in UID:", users.uid);
+
   try {
-    const uid = user.uid;
-    const ref = firebase.firestore().collection("users").doc(uid);
-    const snap = await ref.get();
+    const docRef = firebase.firestore().collection("users").doc(user.uid);
+    const snap = await docRef.get();
+
+    console.log("Firestore response:", snap.exists, snap.data());
 
     if (!snap.exists) {
-      console.error("Firestore document not found");
+      alert("User document not found in Firestore");
       return;
     }
 
     const d = snap.data();
 
-    /* SAFE DOM INJECTION */
-    const welcome = document.getElementById("welcome");
-    const accBal = document.getElementById("accountBalance");
-    const ledBal = document.getElementById("ledgerBalance");
-    const avatar = document.getElementById("avatarTop");
+    document.getElementById("welcome").innerText =
+      `${getGreeting()}, ${d.firstName}`;
 
-    if (!welcome || !accBal || !ledBal || !avatar) {
-      console.error("Required dashboard elements missing");
-      return;
-    }
+    document.getElementById("accountBalance").innerText =
+      `$${Number(d.balance).toLocaleString()}`;
 
-    welcome.innerText = `${getGreeting()}, ${d.firstName}`;
-    accBal.innerText = `$${Number(d.balance).toLocaleString()}`;
-    ledBal.innerText = `$${Number(d.ledger).toLocaleString()}`;
-    avatar.src = d.photo;
+    document.getElementById("ledgerBalance").innerText =
+      `$${Number(d.ledger).toLocaleString()}`;
 
-    /* PROFILE MODAL */
+    document.getElementById("avatarTop").src = d.photo;
+
     document.getElementById("profilePic").src = d.photo;
     document.getElementById("profileName").innerText = d.fullName;
     document.getElementById("profileEmail").innerText = d.email;
@@ -41,13 +44,14 @@ firebase.auth().onAuthStateChanged(async (user) => {
     document.getElementById("profileOccupation").innerText =
       `${d.occupation} (${d.organisation})`;
 
-    /* LOCKED ACCOUNT */
     if (d.status === "locked") {
       document.getElementById("transferBtn").onclick = lockedTransfer;
     }
 
+    console.log("Dashboard populated successfully");
+
   } catch (e) {
-    console.error("Dashboard fatal error:", e);
+    console.error("Fatal dashboard error:", e);
   }
 });
 
@@ -57,4 +61,3 @@ function getGreeting() {
   if (h < 17) return "Good Afternoon";
   return "Good Evening";
 }
-
