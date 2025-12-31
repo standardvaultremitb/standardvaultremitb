@@ -33,18 +33,26 @@ onAuthStateChanged(auth, async (user) => {
 
   document.getElementById("ledgerBalance").innerText =
     `$${Number(data.ledger).toLocaleString()}`;
+  
+/* PROFILE IMAGE */
+const avatar = document.getElementById("profileAvatar");
+const profilePic = document.getElementById("profilePic");
 
-  /* PROFILE IMAGE */
-  document.getElementById("profileAvatar").src = data.photo;
-  document.getElementById("profilePic").src = data.photo;
-  document.getElementById("profilePicModal").src = data.photo;
+if (avatar) avatar.src = data.photo;
+if (profilePic) profilePic.src = data.photo;
 
 /* PROFILE DETAILS */
-document.getElementById("profileName").textContent = data.fullName;
-document.getElementById("profileEmail").textContent = data.email;
-document.getElementById("profileCountry").textContent = data.country;
-document.getElementById("profileOccupation").textContent =
-  `${data.occupation} – ${data.organisation}`;
+const profileName = document.getElementById("profileName");
+const profileEmail = document.getElementById("profileEmail");
+const profileCountry = document.getElementById("profileCountry");
+const profileOccupation = document.getElementById("profileOccupation");
+
+if (profileName) profileName.textContent = data.fullName;
+if (profileEmail) profileEmail.textContent = data.email;
+if (profileCountry) profileCountry.textContent = data.country;
+if (profileOccupation)
+  profileOccupation.textContent =
+    `${data.occupation} – ${data.organisation}`;
 
   /* ACCOUNT STATUS */
   window.accountStatus = data.status;
