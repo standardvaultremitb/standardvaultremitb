@@ -44,15 +44,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* TRANSFER */
   const transferBtn = document.getElementById("transferBtn");
-  if (transferBtn) {
-    transferBtn.addEventListener("click", () => {
-      if (window.accountStatus === "locked") {
-        alert("Account restricted 🔐\nPlease contact support.");
-      } else {
-        alert("Transfer feature coming soon.");
-      }
-    });
-  }
+if (transferBtn) {
+  transferBtn.addEventListener("click", () => {
+    if (window.accountStatus === "locked") {
+      openTransferModal();
+    } else {
+      alert("Transfer feature coming soon.");
+    }
+  });
+}
 
   /* LOAN STATUS */
   const loanStatusBtn = document.getElementById("loanStatusBtn");
