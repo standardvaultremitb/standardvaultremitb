@@ -8,16 +8,17 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  const userRef = doc(db, "users", user.uid);
-  const snap = await getDoc(userRef);
-
-  if (!snap.exists()) {
-    alert("User record not found");
-    return;
-  }
-
   const data = snap.data();
 
+  const snap = await getDoc(userRef);
+
+if (snap.exists()) {
+  const data = snap.data();
+
+  // Render profile info
+  renderUserProfile(data);
+}
+  
   /* GREETING */
     const hour = new Date().getHours();
     let greeting = "Good evening";
@@ -46,6 +47,27 @@ document.getElementById("profileCountry").textContent = data.country;
 document.getElementById("profileOccupation").textContent =
   `${data.occupation} – ${data.organisation}`;
 
+  function renderUserProfile(data) {
+  // Profile photo
+  const profilePic = document.getElementById("profilePic");
+  if (profilePic) {
+    profilePic.src = data.photo;
+    profilePic.alt = data.fullName;
+  }
+
+  // Profile text info
+  const profileName = document.getElementById("profileName");
+  const profileEmail = document.getElementById("profileEmail");
+  const profileCountry = document.getElementById("profileCountry");
+  const profileOccupation = document.getElementById("profileOccupation");
+
+  if (profileName) profileName.textContent = data.fullName;
+  if (profileEmail) profileEmail.textContent = data.email;
+  if (profileCountry) profileCountry.textContent = data.country;
+  if (profileOccupation)
+    profileOccupation.textContent = `${data.occupation} – ${data.organisation}`;
+  }
+  
   /* ACCOUNT STATUS */
   window.accountStatus = data.status;
 });
