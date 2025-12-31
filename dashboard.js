@@ -40,11 +40,6 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById("welcome").textContent =
       `${greeting}, ${data.firstName}`;
 
-  });
-
-});
-
-
   /* BALANCES */
   document.getElementById("accountBalance").innerText =
     `$${Number(data.balance).toLocaleString()}`;
