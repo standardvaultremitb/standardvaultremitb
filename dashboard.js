@@ -25,7 +25,7 @@ onAuthStateChanged(auth, async (user) => {
     else if (hour < 18) greeting = "Good afternoon";
 
     document.getElementById("welcome").textContent =
-      `${greeting}, ${data.fullName}`;
+      `${greeting}, ${data.firstName}`;
 
   /* BALANCES */
   document.getElementById("accountBalance").innerText =
