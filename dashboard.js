@@ -18,14 +18,22 @@ onAuthStateChanged(auth, async (user) => {
 
   const data = snap.data();
 
-  /* GREETING */
-    const hour = new Date().getHours();
-    let greeting = "Good evening";
-    if (hour < 12) greeting = "Good morning";
-    else if (hour < 18) greeting = "Good afternoon";
+/* GREETING */
+const hour = new Date().getHours();
+let greeting = "Good evening";
+if (hour < 12) greeting = "Good morning";
+else if (hour < 18) greeting = "Good afternoon";
 
-    document.getElementById("welcome").textContent =
-      `${greeting}, ${data.firstName}`;
+const firstName =
+  data.firstName && data.firstName.trim() !== ""
+    ? data.firstName
+    : data.fullName
+      ? data.fullName.split(" ")[0]
+      : "User";
+
+document.getElementById("welcome").textContent =
+  `${greeting}, ${firstName}`;
+
 
   /* BALANCES */
   document.getElementById("accountBalance").innerText =
