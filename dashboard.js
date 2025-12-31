@@ -1,64 +1,53 @@
+import { auth, db } from "./firebase.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-console.log("dashboard.js loaded");
-
-firebase.auth().onAuthStateChanged(async (users) => {
-
-  console.log("Auth state changed");
-
-  if (!users) {
-    console.log("No user, redirecting");
+/* ===============================
+   AUTH STATE LISTENER
+   =============================== */
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
     window.location.href = "index.html";
     return;
   }
 
-  console.log("Logged in UID:", users.uid);
-
   try {
-    const docRef = firebase.firestore().collection("users").doc(user.uid);
-    const snap = await docRef.get();
+    const userRef = doc(db, "users", user.uid);
+    const snap = await getDoc(userRef);
 
-    console.log("Firestore response:", snap.exists, snap.data());
-
-    if (!snap.exists) {
-      alert("User document not found in Firestore");
+    if (!snap.exists()) {
+      console.error("User document not found");
       return;
     }
 
-    const d = snap.data();
+    const data = snap.data();
+
+    // Greeting
+    const hour = new Date().getHours();
+    let greet = "Good evening";
+    if (hour < 12) greet = "Good morning";
+    else if (hour < 18) greet = "Good afternoon";
 
     document.getElementById("welcome").innerText =
-      `${getGreeting()}, ${d.firstName}`;
+      `${greet}, ${data.firstName}`;
 
+    // Balances
     document.getElementById("accountBalance").innerText =
-      `$${Number(d.balance).toLocaleString()}`;
+      `$${Number(data.balance).toLocaleString()}`;
 
     document.getElementById("ledgerBalance").innerText =
-      `$${Number(d.ledger).toLocaleString()}`;
+      `$${Number(data.balance).toLocaleString()}`;
 
-    document.getElementById("avatarTop").src = d.photo;
+    // Profile modal fields
+    document.getElementById("pName").innerText =
+      `${data.firstName} ${data.lastName}`;
+    document.getElementById("pEmail").innerText = data.email;
+    document.getElementById("pCountry").innerText = "USA";
+    document.getElementById("pOccupation").innerText =
+      "Orthopedic Surgeon – US Army";
 
-    document.getElementById("profilePic").src = d.photo;
-    document.getElementById("profileName").innerText = d.fullName;
-    document.getElementById("profileEmail").innerText = d.email;
-    document.getElementById("profileCountry").innerText = d.country;
-    document.getElementById("profileOccupation").innerText =
-      `${d.occupation} (${d.organisation})`;
-
-    if (d.status === "locked") {
-      document.getElementById("transferBtn").onclick = lockedTransfer;
-    }
-
-    console.log("Dashboard populated successfully");
-
-  } catch (e) {
-    console.error("Fatal dashboard error:", e);
+  } catch (error) {
+    console.error("Dashboard error:", error);
   }
 });
-
-function getGreeting() {
-  const h = new Date().getHours();
-  if (h < 12) return "Good Morning";
-  if (h < 17) return "Good Afternoon";
-  return "Good Evening";
-}
 
