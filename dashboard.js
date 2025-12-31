@@ -39,10 +39,10 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById("profilePicModal").src = data.photo;
 
 /* PROFILE DETAILS */
-document.getElementById("profileName").innerText = data.fullName;
-document.getElementById("profileEmail").innerText = data.email;
-document.getElementById("profileCountry").innerText = data.country;
-document.getElementById("profileOccupation").innerText =
+document.getElementById("profileName").textContent = data.fullName;
+document.getElementById("profileEmail").textContent = data.email;
+document.getElementById("profileCountry").textContent = data.country;
+document.getElementById("profileOccupation").textContent =
   `${data.occupation} – ${data.organisation}`;
 
   /* ACCOUNT STATUS */
