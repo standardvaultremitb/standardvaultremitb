@@ -37,6 +37,8 @@ onAuthStateChanged(auth, async (user) => {
   /* PROFILE IMAGE */
   document.getElementById("profilePic").src = data.photo;
   document.getElementById("profilePicModal").src = data.photo;
+  document.getElementById("profileAvatar").src = data.photo;
+  
 
 /* PROFILE DETAILS */
 document.getElementById("profileName").textContent = data.fullName;
