@@ -1,38 +1,64 @@
 
-console.log("Dashboard script loaded");
+console.log("dashboard.js loaded");
 
-firebase.auth().onAuthStateChanged(async (user) => {
-  console.log("Auth check running");
+firebase.auth().onAuthStateChanged(async (users) => {
 
-  if (!user) {
-    console.log("No authenticated user");
-    alert("Not logged in");
+  console.log("Auth state changed");
+
+  if (!users) {
+    console.log("No user, redirecting");
+    window.location.href = "index.html";
     return;
   }
 
-  console.log("Logged in UID:", user.uid);
+  console.log("Logged in UID:", users.uid);
 
   try {
     const docRef = firebase.firestore().collection("users").doc(user.uid);
     const snap = await docRef.get();
 
-    console.log("Firestore exists:", snap.exists);
-    console.log("Firestore data:", snap.data());
+    console.log("Firestore response:", snap.exists, snap.data());
 
     if (!snap.exists) {
-      alert("User document NOT found in Firestore");
+      alert("User document not found in Firestore");
       return;
     }
 
-    // TEMPORARY DISPLAY (bypass UI)
-    alert(
-      "DATA FOUND:\n" +
-      "Name: " + snap.data().firstName + "\n" +
-      "Balance: $" + snap.data().balance
-    );
+    const d = snap.data();
 
-  } catch (err) {
-    console.error("Firestore error:", err);
-    alert("Firestore error — check console");
+    document.getElementById("welcome").innerText =
+      `${getGreeting()}, ${d.firstName}`;
+
+    document.getElementById("accountBalance").innerText =
+      `$${Number(d.balance).toLocaleString()}`;
+
+    document.getElementById("ledgerBalance").innerText =
+      `$${Number(d.ledger).toLocaleString()}`;
+
+    document.getElementById("avatarTop").src = d.photo;
+
+    document.getElementById("profilePic").src = d.photo;
+    document.getElementById("profileName").innerText = d.fullName;
+    document.getElementById("profileEmail").innerText = d.email;
+    document.getElementById("profileCountry").innerText = d.country;
+    document.getElementById("profileOccupation").innerText =
+      `${d.occupation} (${d.organisation})`;
+
+    if (d.status === "locked") {
+      document.getElementById("transferBtn").onclick = lockedTransfer;
+    }
+
+    console.log("Dashboard populated successfully");
+
+  } catch (e) {
+    console.error("Fatal dashboard error:", e);
   }
 });
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good Morning";
+  if (h < 17) return "Good Afternoon";
+  return "Good Evening";
+}
+
