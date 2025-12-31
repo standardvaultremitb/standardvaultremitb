@@ -1,6 +1,13 @@
 import { auth, db } from "./firebase.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+window.logout = function () {
+  signOut(auth).then(() => {
+    window.location.href = "index.html";
+  });
+};
 
 /* ===============================
    AUTH STATE LISTENER
@@ -51,11 +58,4 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-window.logout = function () {
-  signOut(auth).then(() => {
-    window.location.href = "index.html";
-  });
-};
 
