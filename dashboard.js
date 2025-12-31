@@ -1,65 +1,60 @@
-document.addEventListener("DOMContentLoaded", () => {
+firebase.auth().onAuthStateChanged(async (user) => {
 
-  firebase.auth().onAuthStateChanged(async (user) => {
-    if (!user) {
-      window.location.href = "index.html";
+  if (!user) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  try {
+    const uid = user.uid;
+    const ref = firebase.firestore().collection("users").doc(uid);
+    const snap = await ref.get();
+
+    if (!snap.exists) {
+      console.error("Firestore document not found");
       return;
     }
 
-    const uid = user.uid;
+    const d = snap.data();
 
-    try {
-      const snap = await firebase
-        .firestore()
-        .collection("users")
-        .doc(uid)
-        .get();
+    /* SAFE DOM INJECTION */
+    const welcome = document.getElementById("welcome");
+    const accBal = document.getElementById("accountBalance");
+    const ledBal = document.getElementById("ledgerBalance");
+    const avatar = document.getElementById("avatarTop");
 
-      if (!snap.exists) {
-        alert("User profile not found.");
-        return;
-      }
-
-      const data = snap.data();
-
-      /* GREETING */
-      document.getElementById("welcome").innerText =
-        `${getGreeting()}, ${data.firstName}`;
-
-      /* BALANCES */
-      document.getElementById("accountBalance").innerText =
-        `$${Number(data.balance).toLocaleString()}`;
-
-      document.getElementById("ledgerBalance").innerText =
-        `$${Number(data.ledger).toLocaleString()}`;
-
-      /* AVATAR */
-      document.getElementById("avatarTop").src = data.photo;
-
-      /* PROFILE MODAL */
-      document.getElementById("profileName").innerText = data.fullName;
-      document.getElementById("profileEmail").innerText = data.email;
-      document.getElementById("profileCountry").innerText = data.country;
-      document.getElementById("profileOccupation").innerText =
-        `${data.occupation} (${data.organisation})`;
-
-      /* LOCKED STATUS */
-      if (data.status === "locked") {
-        document.getElementById("transferBtn")
-          .addEventListener("click", lockedTransfer);
-      }
-
-    } catch (e) {
-      console.error("Dashboard load error:", e);
+    if (!welcome || !accBal || !ledBal || !avatar) {
+      console.error("Required dashboard elements missing");
+      return;
     }
-  });
 
+    welcome.innerText = `${getGreeting()}, ${d.firstName}`;
+    accBal.innerText = `$${Number(d.balance).toLocaleString()}`;
+    ledBal.innerText = `$${Number(d.ledger).toLocaleString()}`;
+    avatar.src = d.photo;
+
+    /* PROFILE MODAL */
+    document.getElementById("profilePic").src = d.photo;
+    document.getElementById("profileName").innerText = d.fullName;
+    document.getElementById("profileEmail").innerText = d.email;
+    document.getElementById("profileCountry").innerText = d.country;
+    document.getElementById("profileOccupation").innerText =
+      `${d.occupation} (${d.organisation})`;
+
+    /* LOCKED ACCOUNT */
+    if (d.status === "locked") {
+      document.getElementById("transferBtn").onclick = lockedTransfer;
+    }
+
+  } catch (e) {
+    console.error("Dashboard fatal error:", e);
+  }
 });
 
 function getGreeting() {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good Morning";
-  if (hour < 17) return "Good Afternoon";
+  const h = new Date().getHours();
+  if (h < 12) return "Good Morning";
+  if (h < 17) return "Good Afternoon";
   return "Good Evening";
 }
 
