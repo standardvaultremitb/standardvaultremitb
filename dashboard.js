@@ -40,21 +40,6 @@ if (snap.exists()) {
   document.getElementById("profilePic").src = data.photo;
   document.getElementById("profilePicModal").src = data.photo;
 
-/* PROFILE DETAILS */
-document.getElementById("profileName").textContent = data.fullName;
-document.getElementById("profileEmail").textContent = data.email;
-document.getElementById("profileCountry").textContent = data.country;
-document.getElementById("profileOccupation").textContent =
-  `${data.occupation} – ${data.organisation}`;
-
-  function renderUserProfile(data) {
-  // Profile photo
-  const profilePic = document.getElementById("profilePic");
-  if (profilePic) {
-    profilePic.src = data.photo;
-    profilePic.alt = data.fullName;
-  }
-
   // Profile text info
   const profileName = document.getElementById("profileName");
   const profileEmail = document.getElementById("profileEmail");
@@ -66,7 +51,6 @@ document.getElementById("profileOccupation").textContent =
   if (profileCountry) profileCountry.textContent = data.country;
   if (profileOccupation)
     profileOccupation.textContent = `${data.occupation} – ${data.organisation}`;
-  }
   
   /* ACCOUNT STATUS */
   window.accountStatus = data.status;
