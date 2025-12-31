@@ -24,6 +24,17 @@ function closeLoanModal() {
   if (modal) modal.style.display = "none";
 }
 
+/* TRANSFER MODAL */
+function openTransferModal() {
+  const modal = document.getElementById("transferModal");
+  if (modal) modal.style.display = "block";
+}
+
+function closeTransferModal() {
+  const modal = document.getElementById("transferModal");
+  if (modal) modal.style.display = "none";
+}
+
 /* CLOSE MODALS ON OUTSIDE CLICK */
 window.addEventListener("click", function (event) {
   const profileModal = document.getElementById("profileModal");
@@ -35,7 +46,6 @@ window.addEventListener("click", function (event) {
   if (event.target === transferModal) transferModal.style.display = "none";
 });
 
-
 /* ===============================
    BUTTON HANDLERS
    =============================== */
@@ -44,15 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* TRANSFER */
   const transferBtn = document.getElementById("transferBtn");
-if (transferBtn) {
-  transferBtn.addEventListener("click", () => {
-    if (window.accountStatus === "locked") {
-      openTransferModal();
-    } else {
-      alert("Transfer feature coming soon.");
-    }
-  });
-}
+  if (transferBtn) {
+    transferBtn.addEventListener("click", () => {
+      if (window.accountStatus === "locked") {
+        openTransferModal();
+      } else {
+        alert("Transfer feature coming soon.");
+      }
+    });
+  }
 
   /* LOAN STATUS */
   const loanStatusBtn = document.getElementById("loanStatusBtn");
@@ -61,4 +71,4 @@ if (transferBtn) {
   }
 
 });
-
+   
