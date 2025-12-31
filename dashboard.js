@@ -38,12 +38,12 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById("profilePic").src = data.photo;
   document.getElementById("profilePicModal").src = data.photo;
 
-  /* PROFILE DETAILS */
-  document.getElementById("pName").innerText = data.fullName;
-  document.getElementById("pEmail").innerText = data.email;
-  document.getElementById("pCountry").innerText = data.country;
-  document.getElementById("pOccupation").innerText =
-    `${data.occupation} – ${data.organisation}`;
+/* PROFILE DETAILS */
+document.getElementById("profileName").innerText = data.fullName;
+document.getElementById("profileEmail").innerText = data.email;
+document.getElementById("profileCountry").innerText = data.country;
+document.getElementById("profileOccupation").innerText =
+  `${data.occupation} – ${data.organisation}`;
 
   /* ACCOUNT STATUS */
   window.accountStatus = data.status;
