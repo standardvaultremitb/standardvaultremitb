@@ -4,8 +4,12 @@
    =============================== */
 
 /* TRANSFER LOCK */
-function lockedTransfer() {
-  alert("Account restricted 🔐\nPlease contact support.");
+function handleTransfer() {
+  if (window.accountStatus === "locked") {
+    alert("Account restricted 🔐\nPlease contact support.");
+  } else {
+    alert("Transfer feature coming soon.");
+  }
 }
 
 /* PROFILE MODAL */
