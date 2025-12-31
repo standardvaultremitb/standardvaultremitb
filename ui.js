@@ -48,3 +48,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+/* ===============================
+   LOAN STATUS HANDLER
+   =============================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const loanStatusBtn = document.getElementById("loanStatusBtn");
+
+  if (loanStatusBtn) {
+    loanStatusBtn.addEventListener("click", () => {
+      alert("Loan Eligibility: Good Standing");
+    });
+  }
+});
