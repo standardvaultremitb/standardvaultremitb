@@ -30,3 +30,21 @@ window.addEventListener("click", function (event) {
     modal.style.display = "none";
   }
 });
+
+/* ===============================
+   TRANSFER BUTTON HANDLER
+   =============================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const transferBtn = document.getElementById("transferBtn");
+
+  if (transferBtn) {
+    transferBtn.addEventListener("click", () => {
+      if (window.accountStatus === "locked") {
+        alert("Account restricted 🔐\nPlease contact support.");
+      } else {
+        alert("Transfer feature coming soon.");
+      }
+    });
+  }
+});
