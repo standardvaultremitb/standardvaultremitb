@@ -49,16 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ===============================
-   LOAN STATUS HANDLER
-   =============================== */
+/* LOAN MODAL */
+function openLoanModal() {
+  const modal = document.getElementById("loanModal");
+  if (modal) modal.style.display = "block";
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  const loanStatusBtn = document.getElementById("loanStatusBtn");
-
-  if (loanStatusBtn) {
-    loanStatusBtn.addEventListener("click", () => {
-      alert("Loan Eligibility: Good Standing");
-    });
-  }
-});
+function closeLoanModal() {
+  const modal = document.getElementById("loanModal");
+  if (modal) modal.style.display = "none";
+}
