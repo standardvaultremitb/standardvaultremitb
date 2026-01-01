@@ -72,3 +72,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
    
+/* ===============================
+   AUTO LOGOUT (INACTIVITY ONLY)
+   =============================== */
+
+import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { auth } from "./firebase.js";
+
+/* CONFIG — change if needed */
+const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
+
+let inactivityTimer;
+
+/* LOGOUT FUNCTION */
+function logout(reason = null) {
+  signOut(auth)
+    .then(() => {
+      if (reason) alert(reason);
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      console.error("Logout error:", error);
+      window.location.href = "index.html";
+    });
+}
+
+/* RESET INACTIVITY TIMER */
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(() => {
+    logout("Logged out due to inactivity.");
+  }, INACTIVITY_LIMIT);
+}
+
+/* TRACK USER ACTIVITY */
+[
+  "click",
+  "mousemove",
+  "keydown",
+  "scroll",
+  "touchstart"
+].forEach(event => {
+  document.addEventListener(event, resetInactivityTimer, true);
+});
+
+/* INIT */
+document.addEventListener("DOMContentLoaded", () => {
+  resetInactivityTimer();
+});
