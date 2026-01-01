@@ -1,57 +1,57 @@
 /* ===============================
-   UI ACTIONS & INTERACTIONS
+   IMPORTS (MUST BE AT TOP)
    =============================== */
 import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { auth } from "./firebase.js";
 
+/* ===============================
+   UI ACTIONS & INTERACTIONS
+   =============================== */
+
 /* PROFILE MODAL */
-function openProfile() {
+window.openProfile = function () {
   const modal = document.getElementById("profileModal");
   if (modal) modal.style.display = "block";
-}
+};
 
-function closeProfile() {
+window.closeProfile = function () {
   const modal = document.getElementById("profileModal");
   if (modal) modal.style.display = "none";
-}
+};
 
 /* LOAN MODAL */
-function openLoanModal() {
+window.openLoanModal = function () {
   const modal = document.getElementById("loanModal");
   if (modal) modal.style.display = "block";
-}
+};
 
-function closeLoanModal() {
+window.closeLoanModal = function () {
   const modal = document.getElementById("loanModal");
   if (modal) modal.style.display = "none";
-}
+};
 
 /* TRANSFER MODAL */
-function openTransferModal() {
+window.openTransferModal = function () {
   const modal = document.getElementById("transferModal");
   if (modal) modal.style.display = "block";
-}
+};
 
-function closeTransferModal() {
+window.closeTransferModal = function () {
   const modal = document.getElementById("transferModal");
   if (modal) modal.style.display = "none";
-}
+};
 
 /* CLOSE MODALS ON OUTSIDE CLICK */
-window.addEventListener("click", function (event) {
-  const profileModal = document.getElementById("profileModal");
-  const loanModal = document.getElementById("loanModal");
-  const transferModal = document.getElementById("transferModal");
-
-  if (event.target === profileModal) profileModal.style.display = "none";
-  if (event.target === loanModal) loanModal.style.display = "none";
-  if (event.target === transferModal) transferModal.style.display = "none";
+window.addEventListener("click", (event) => {
+  ["profileModal", "loanModal", "transferModal"].forEach(id => {
+    const modal = document.getElementById(id);
+    if (event.target === modal) modal.style.display = "none";
+  });
 });
 
 /* ===============================
    BUTTON HANDLERS
    =============================== */
-
 document.addEventListener("DOMContentLoaded", () => {
 
   /* TRANSFER */
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (transferBtn) {
     transferBtn.addEventListener("click", () => {
       if (window.accountStatus === "locked") {
-        openTransferModal();
+        openTransferModal(); // Account restricted modal
       } else {
         alert("Transfer feature coming soon.");
       }
@@ -72,26 +72,23 @@ document.addEventListener("DOMContentLoaded", () => {
     loanStatusBtn.addEventListener("click", openLoanModal);
   }
 
+  /* INIT INACTIVITY TIMER */
+  resetInactivityTimer();
 });
-   
+
 /* ===============================
    AUTO LOGOUT (INACTIVITY ONLY)
    =============================== */
 
-/* CONFIG — change if needed */
+/* CONFIG */
 const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
-
 let inactivityTimer;
 
 /* LOGOUT FUNCTION */
 function logout(reason = null) {
   signOut(auth)
-    .then(() => {
+    .finally(() => {
       if (reason) alert(reason);
-      window.location.href = "index.html";
-    })
-    .catch((error) => {
-      console.error("Logout error:", error);
       window.location.href = "index.html";
     });
 }
@@ -105,17 +102,6 @@ function resetInactivityTimer() {
 }
 
 /* TRACK USER ACTIVITY */
-[
-  "click",
-  "mousemove",
-  "keydown",
-  "scroll",
-  "touchstart"
-].forEach(event => {
+["click", "mousemove", "keydown", "scroll", "touchstart"].forEach(event => {
   document.addEventListener(event, resetInactivityTimer, true);
-});
-
-/* INIT */
-document.addEventListener("DOMContentLoaded", () => {
-  resetInactivityTimer();
 });
