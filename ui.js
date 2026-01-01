@@ -1,6 +1,8 @@
 /* ===============================
    UI ACTIONS & INTERACTIONS
    =============================== */
+import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { auth } from "./firebase.js";
 
 /* PROFILE MODAL */
 function openProfile() {
@@ -75,9 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ===============================
    AUTO LOGOUT (INACTIVITY ONLY)
    =============================== */
-
-import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { auth } from "./firebase.js";
 
 /* CONFIG — change if needed */
 const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
